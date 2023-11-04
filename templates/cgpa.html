@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CGPA Calculator</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #ff6347;
+            text-align: center;
+        }
+        form {
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button, input[type="submit"] {
+            background-color: #ff6347;
+            color: white;
+            cursor: pointer;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover, input[type="submit"]:hover {
+            background-color: #ff7f50;
+        }
+        #calcButton {
+            display: none;
+            margin-top: 10px;
+        }
+        #result {
+            text-align: center;
+            font-size: 3em;
+            color: #ff6347;
+            animation: fadeIn 2s;
+            margin-top: 50px;
+        }
+        @keyframes fadeIn {
+            0% {opacity: 0;}
+            100% {opacity: 1;}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CGPA Calculator</h1>
+        <form method="POST" onsubmit="return validateForm()">
+            <label for="subjects">Number of Subjects:</label>
+            <input type="number" id="subjects" name="subjects" min="1"><br>
+            <div id="subjectInputs"></div>
+            <button type="button" onclick="addSubjectInputs()">Generate Input Fields</button><br>
+            <input id="calcButton" type="submit" value="Calculate CGPA">
+        </form>
+        <canvas id="myChart"></canvas>
+        {% if cgpa %}
+        <div id="result">Your CGPA is: {{ cgpa }}</div>
+        {% endif %}
+    </div>
+    <script>
+        function addSubjectInputs() {
+            var subjects = document.getElementById('subjects').value;
+            var container = document.getElementById('subjectInputs');
+            container.innerHTML = '';
+            for (i = 0; i < subjects; i++) {
+                container.innerHTML += '<label for="grade">Grade for subject ' + (i+1) + ':</label><input type="number" id="grade" name="grade"><br><label for="credit">Credit for subject ' + (i+1) + ':</label><input type="number" id="credit" name="credit"><br>';
+            }
+            document.getElementById('calcButton').style.display = 'block';
+        }
+        function validateForm() {
+            if (document.getElementById('calcButton').style.display === 'none') {
+                return false;
+            }
+            return true;
+        }
+        var ctx = document.getElementById('myChart').getContext('2d');
+        Chart.defaults.global.defaultFontFamily = 'Poppins';
+        Chart.defaults.global.defaultFontSize = 16;
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Subject 1', 'Subject 2', 'Subject 3'], 
+                datasets: [{
+                    data: [12, 19, 3], 
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            }
+        });
+    </script>    
+</body>
+</html>
