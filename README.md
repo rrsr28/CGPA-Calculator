@@ -2,7 +2,7 @@
 
 ## Overview
 
-The CGPA Calculator is a web application built with Python and Flask that allows users to calculate their Cumulative Grade Point Average (CGPA) based on their grades and credits for multiple subjects. 
+A very simple CGPA Calculator is a web application built with Python and Flask that allows users to calculate their Cumulative Grade Point Average (CGPA) based on their grades and credits for multiple subjects. 
 
 ## Features
 
